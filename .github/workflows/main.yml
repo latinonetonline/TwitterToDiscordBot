@@ -5,8 +5,8 @@ on:
     branches: [ main ]
     
   schedule: 
-   # Cada media hora
-   - cron: '30 * * * *' 
+   # Cada 15 minutos
+   - cron: '*/5 * * * *' 
      
 
   workflow_dispatch:
