@@ -5,9 +5,11 @@ on:
     branches: [ main ]
     
   schedule: 
-   # Cada 15 minutos
+   # Cada 5 minutos. Igual ni funciona 🤷‍♂️
    - cron: '*/5 * * * *' 
-     
+   
+  repository_dispatch:
+    types: [TwitterToDiscordBot]
 
   workflow_dispatch:
 
