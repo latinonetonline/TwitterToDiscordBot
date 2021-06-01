@@ -1,0 +1,32 @@
+name: Twitter To Discord Bot
+
+on:
+  push:
+    branches: [ main ]
+    
+  schedule: 
+   # Cada media hora
+   - cron: '30 * * * *' 
+     
+
+  workflow_dispatch:
+
+jobs:
+   
+  job:
+    name: Run Action
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    
+    - name: Copy AivenWeb Packages
+      run: cp -r offline-packages src/packages
+
+    - name: Run Console
+      run: dotnet run -c Release --project src/TwitterToDiscordBot/TwitterToDiscordBot.csproj -- -gh-token ${{ secrets.GHToken }} -tw-api-key ${{ secrets.TWApiKey }} -tw-api-secret ${{ secrets.TWApiSecret }} -discord-webhook ${{ secrets.DiscordWebhook }}
+
