@@ -2,10 +2,9 @@
 
 namespace TwitterToDiscordBot.Models.Discord
 {
-    class Author
+    class Footer
     {
-        public string? Name { get; set; }
-        public Uri? Url { get; set; }
+        public string? Text { get; set; }
         public Uri? Icon_url { get; set; }
     }
 }
