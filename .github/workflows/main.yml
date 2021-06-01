@@ -9,7 +9,7 @@ on:
    - cron: '*/5 * * * *' 
    
   repository_dispatch:
-    types: [TwitterToDiscordBot]
+    types: [TwitterToDiscordBot-Dispatch]
 
   workflow_dispatch:
 
