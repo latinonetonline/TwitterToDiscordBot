@@ -62,7 +62,7 @@ namespace TwitterToDiscordBot.Services
                 {
                     Username = "Twitter Bot",
 
-                    Content = "https://twitter.com/LauchaCarro/status/" + status.StatusID,
+                    Content = "https://twitter.com/LatinoNetOnline/status/" + status.StatusID,
 
                     Embeds = new()
                     {
