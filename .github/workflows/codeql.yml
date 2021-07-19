@@ -28,6 +28,10 @@ jobs:
         config-file: ./.github/codeql/codeql-config.yml
         languages: ${{ matrix.language }}
 
+
+    - name: Copy AivenWeb Packages
+      run: cp -r offline-packages src/packages
+      
     - name: Autobuild
       uses: github/codeql-action/autobuild@v1
 
