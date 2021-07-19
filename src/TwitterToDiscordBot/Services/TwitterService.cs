@@ -35,30 +35,24 @@ namespace TwitterToDiscordBot.Services
                 CredentialStore = inMemoryCredentialStore
             };
 
-            TwitterContext twitterCtx = new(xAuthAuthorizer);
+            ;
+            using TwitterContext twitterCtx = new(xAuthAuthorizer);
 
             string searchTerm = $"from:{_parameters.TwitterUsername}";
 
-            try
-            {
-                Search? searchResponse =
-                    await
-                    (from search in twitterCtx.Search
-                     where search.Type == SearchType.Search &&
-                           search.Query == searchTerm &&
-                           search.IncludeEntities &&
-                           search.SinceID == lastTweetStatusId &&
-                           search.TweetMode == TweetMode.Extended &&
-                           search.Count == 50
-                     select search)
-                    .SingleOrDefaultAsync();
+            Search? searchResponse =
+                await
+                (from search in twitterCtx.Search
+                 where search.Type == SearchType.Search &&
+                       search.Query == searchTerm &&
+                       search.IncludeEntities &&
+                       search.SinceID == lastTweetStatusId &&
+                       search.TweetMode == TweetMode.Extended &&
+                       search.Count == 50
+                 select search)
+                .SingleOrDefaultAsync();
 
-                return searchResponse?.Statuses ?? Enumerable.Empty<Status>();
-            }
-            finally
-            {
-                twitterCtx.Dispose();
-            }
+            return searchResponse?.Statuses ?? Enumerable.Empty<Status>();
         }
     }
 }
