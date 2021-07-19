@@ -44,12 +44,14 @@ namespace TwitterToDiscordBot.Services
                 (from search in twitterCtx.Search
                  where search.Type == SearchType.Search &&
                        search.Query == searchTerm &&
-                       search.IncludeEntities == true &&
+                       search.IncludeEntities &&
                        search.SinceID == lastTweetStatusId &&
                        search.TweetMode == TweetMode.Extended &&
                        search.Count == 50
                  select search)
                 .SingleOrDefaultAsync();
+
+            twitterCtx.Dispose();
 
             return searchResponse?.Statuses ?? Enumerable.Empty<Status>();
         }
