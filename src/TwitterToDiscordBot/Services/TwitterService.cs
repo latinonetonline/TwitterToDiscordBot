@@ -39,21 +39,26 @@ namespace TwitterToDiscordBot.Services
 
             string searchTerm = $"from:{_parameters.TwitterUsername}";
 
-            Search? searchResponse =
-                await
-                (from search in twitterCtx.Search
-                 where search.Type == SearchType.Search &&
-                       search.Query == searchTerm &&
-                       search.IncludeEntities &&
-                       search.SinceID == lastTweetStatusId &&
-                       search.TweetMode == TweetMode.Extended &&
-                       search.Count == 50
-                 select search)
-                .SingleOrDefaultAsync();
+            try
+            {
+                Search? searchResponse =
+                    await
+                    (from search in twitterCtx.Search
+                     where search.Type == SearchType.Search &&
+                           search.Query == searchTerm &&
+                           search.IncludeEntities &&
+                           search.SinceID == lastTweetStatusId &&
+                           search.TweetMode == TweetMode.Extended &&
+                           search.Count == 50
+                     select search)
+                    .SingleOrDefaultAsync();
 
-            twitterCtx.Dispose();
-
-            return searchResponse?.Statuses ?? Enumerable.Empty<Status>();
+                return searchResponse?.Statuses ?? Enumerable.Empty<Status>();
+            }
+            finally
+            {
+                twitterCtx.Dispose();
+            }
         }
     }
 }
